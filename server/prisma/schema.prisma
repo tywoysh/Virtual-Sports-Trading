@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id           Int      @id @default(autoincrement()) @map("_id")
+  name         String   @db.VarChar(255)
+  openingPrice Decimal  @db.Decimal(10, 2)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Ohlc         Ohlc[]
+}
+
+model Ohlc {
+  id     Int      @id @default(autoincrement()) @map("_id")
+  teamId Int      @map("team_id")
+  date   DateTime
+  open   Decimal  @db.Decimal(10, 2)
+  high   Decimal  @db.Decimal(10, 2)
+  low    Decimal  @db.Decimal(10, 2)
+  close  Decimal  @db.Decimal(10, 2)
+  team   Team     @relation(fields: [teamId], references: [id])
+}
