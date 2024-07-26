@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@canvasjs/react-charts": "^1.0.2",
     "axios": "^1.7.2",
     "lightweight-charts": "^4.1.6",
     "react": "^18.3.1",
