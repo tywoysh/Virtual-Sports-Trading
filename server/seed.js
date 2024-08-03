@@ -71,7 +71,7 @@ async function seedTeams() {
 function generateRandomOHLCData(openingPrice, days) {
   const ohlcData = [];
   const startDate = new Date();
-  startDate.setDate(startDate.getDate() - days); // Start a month ago
+  startDate.setDate(startDate.getDate() - days+1); // Start a month ago
 
   let previousClose = parseFloat(openingPrice); // Initialize with opening price
 
