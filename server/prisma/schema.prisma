@@ -14,6 +14,7 @@ model Team {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Ohlc         Ohlc[]
+  Trades       Trade[]
 }
 
 model Ohlc {
@@ -25,4 +26,24 @@ model Ohlc {
   low    Decimal  @db.Decimal(10, 2)
   close  Decimal  @db.Decimal(10, 2)
   team   Team     @relation(fields: [teamId], references: [id])
+}
+
+model User {
+  id        Int      @id @default(autoincrement()) @map("_id")
+  username  String   @db.VarChar(255) @unique
+  password  String
+  balance   Decimal  @db.Decimal(10, 2) @default(1000.00) // Initial balance
+  Trades    Trade[]
+}
+
+model Trade {
+  id        Int      @id @default(autoincrement()) @map("_id")
+  userId    Int      @map("user_id")
+  teamId    Int      @map("team_id")
+  type      String   @db.VarChar(4) // "buy" or "sell"
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  team      Team     @relation(fields: [teamId], references: [id])
 }
